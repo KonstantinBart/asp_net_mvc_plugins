@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Common.IPluginModule>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+        @if (Model == null)
+        {
+            <h2>No plugins</h2>
+        }
+        else
+        {
+            <h2>Plugins:</h2>
+
+            foreach (var module in Model)
+            {
+                <p>
+                    <b>@module.Name</b> - @module.ToString()
+                </p>
+            }
+            <p>
+                <a href="@Url.Action("finder", "home")">Find...</a>
+            </p>
+        }
+    </div>
+</body>
+</html>

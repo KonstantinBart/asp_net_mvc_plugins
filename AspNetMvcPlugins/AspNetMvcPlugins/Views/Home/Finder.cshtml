@@ -1,0 +1,33 @@
+﻿@using Common;
+
+
+@{
+    Layout = null;
+}
+
+<h1>Finder</h1>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Finder</title>
+</head>
+<body>
+    <div> 
+        @if (ViewBag.Actions != null)
+        {
+            foreach (var action in (IEnumerable<IFinder>)ViewBag.Actions)
+            {
+            <form method="POST">
+                <input type="hidden" name="operation"  value="@action.Name"/>
+                <p>
+                    <button type="submit">@action.Name</button>
+                </p>
+            </form>
+            }
+        }
+    </div>
+</body>
+</html>
