@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxtFinderPlugin", "TxtFinde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{E22A4C8B-3CEC-4601-8B3F-FCB7C9341A54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocFinderPlugin", "DocFinderPlugin\DocFinderPlugin.csproj", "{01B5358F-A663-4B3A-8F2C-899F998D7A45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,11 +29,16 @@ Global
 		{E22A4C8B-3CEC-4601-8B3F-FCB7C9341A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E22A4C8B-3CEC-4601-8B3F-FCB7C9341A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E22A4C8B-3CEC-4601-8B3F-FCB7C9341A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B5358F-A663-4B3A-8F2C-899F998D7A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B5358F-A663-4B3A-8F2C-899F998D7A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B5358F-A663-4B3A-8F2C-899F998D7A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B5358F-A663-4B3A-8F2C-899F998D7A45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4D370A4A-9BBA-4BE0-9376-85D69E238E4F} = {84D58911-37D9-4CBC-9783-8FC6F23D18EF}
+		{01B5358F-A663-4B3A-8F2C-899F998D7A45} = {84D58911-37D9-4CBC-9783-8FC6F23D18EF}
 	EndGlobalSection
 EndGlobal
