@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Common.IPluginModule>
+@*@model Domain.Core.SearchParameters*@
 
 @{
     Layout = null;
@@ -30,6 +31,33 @@
             <p>
                 <a href="@Url.Action("finder", "home")">Find...</a>
             </p>
+        }
+    </div>
+    <div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            @*<p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
+            <p>@Html.CheckBoxFor(x => x.IsSearchInSubfolders) Поиск в подкаталогах</p>
+            <p>Размер:</p>
+            <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
+            <p>Дата:</p>
+            <p>создан: @Html.TextBoxFor(x => x.CreationDate, new { type="date" })</p>*@
+            <p>Аттрибуты:</p>
+            <p>
+                @foreach (var item in Enum.GetNames(typeof( FileAttributes)))
+	            {
+                    @Html.CheckBox(item);
+                }
+            </p>
+            <p>Расширенный поиск:
+                @*@Html.DropDownListFor(x => x.WillAttend, new[] {
+                    new SelectListItem() { Text = "Да, конечно я буду", Value = Boolean.TrueString},
+                    new SelectListItem() { Text = "Нет, я не смогу", Value = Boolean.FalseString}
+                })*@
+            </p>
+            <input type="submit" value="Искать" />
         }
     </div>
 </body>

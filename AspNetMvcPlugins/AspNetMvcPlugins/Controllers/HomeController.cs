@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AspNetMvcPlugins.Infrastructure;
+using Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace AspNetMvcPlugins.Controllers
         public ActionResult Index()
         {
             var modules = DependencyResolver.Current.GetServices<IPluginModule>();
+            SearchHelper.TestSearch();
             return View(modules);
         }
 
