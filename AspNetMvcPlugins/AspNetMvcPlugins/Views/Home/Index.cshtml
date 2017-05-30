@@ -58,6 +58,10 @@
                 </p>
             </p>
             <input type="submit" value="Искать" />
+            <p>Найдено:  @Html.Label(((IEnumerable<string>)ViewBag.SearchedFiles).Count().ToString())</p>
+            <p>
+                @Html.ListBox("resultList", new MultiSelectList(ViewBag.SearchedFiles))
+            </p>
         }
     </div>
 </body>

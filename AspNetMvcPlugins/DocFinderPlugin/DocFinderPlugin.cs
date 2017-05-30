@@ -7,7 +7,7 @@ namespace DocFinderPlugin
     {
         public override string ToString()
         {
-            return ".doc searcher";
+            return ".doc";
         }
 
         protected override void Load(ContainerBuilder builder)

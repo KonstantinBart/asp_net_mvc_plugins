@@ -29,13 +29,14 @@ namespace AspNetMvcPlugins.Controllers
 			ISearchParameters searchParameters = new SearchParameters();
 			searchParameters.FolderPath = @"C:\test\";
 			searchParameters.IsSearchInSubfolders = true;
-			searchParameters.FileLength = 2048;
+			searchParameters.FileLength = 4096;
 			searchParameters.CreationDate = DateTime.Now;
-			searchParameters.FileAttributes = FileAttributes.Normal;
+			searchParameters.FileAttributes = FileAttributes.Archive;
 
 			//var action = _actions.SingleOrDefault(m => m.FileExtension == ".txt");
 			//IEnumerable<string> searchedResult = SearchHelper.TestSearch(searchParameters, action);
 
+            ViewBag.SearchedFiles = new List<string>();
 			return View(searchParameters);
         }
 
@@ -45,19 +46,17 @@ namespace AspNetMvcPlugins.Controllers
 		{
 			var modules = DependencyResolver.Current.GetServices<IPluginModule>();
 			ViewBag.Plugins = modules;
-			
-			//TODO: Get from View
-			ISearchParameters searchParameters = new SearchParameters();
-			searchParameters.FolderPath = @"C:\test\";
-			searchParameters.IsSearchInSubfolders = true;
-			searchParameters.FileLength = 2048;
-			searchParameters.CreationDate = DateTime.Now;
-			searchParameters.FileAttributes = FileAttributes.Normal;
+            
+            //TODO: Get from View
+            parameters.FileAttributes = FileAttributes.Archive;
 
-			var action = _actions.SingleOrDefault(m => m.FileExtension == ".txt");
-			IEnumerable<string> searchedResult = SearchHelper.TestSearch(searchParameters, action);
+            IFinder action = null;
+            if (!String.IsNullOrEmpty(parameters.PluginModuleId))
+                action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.PluginModuleId));
+            IEnumerable<string> searchedResult = SearchHelper.TestSearch(parameters, action);
+            ViewBag.SearchedFiles = searchedResult;
 
-			return View(searchParameters);
+            return View(parameters);
 		}
 
 
