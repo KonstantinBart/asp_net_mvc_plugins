@@ -7,7 +7,7 @@ namespace TxtFinderPlugin
     {
         public override string ToString()
         {
-            return ".txt searcher";
+            return ".txt";
         }
 
         protected override void Load(ContainerBuilder builder)

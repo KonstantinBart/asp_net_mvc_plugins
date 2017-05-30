@@ -9,8 +9,6 @@ namespace Domain.Core
         [Required(ErrorMessage = "Пожалуйста, введите путь для поиска")]
         public string FolderPath { get; set; }
 
-        public string FileName { get; set; }
-
         public bool IsSearchInSubfolders { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, введите строку для поиска")]
@@ -22,8 +20,6 @@ namespace Domain.Core
 
         public FileAttributes FileAttributes { get; set; }
 
-        //public PluginsInitializer.FileExtension FileExtension { get; set; }
-
-        public ISearchFileParameters searchFileParameters { get; set; }
-    }
+		public string PluginModuleId { get; set; }
+	}
 }

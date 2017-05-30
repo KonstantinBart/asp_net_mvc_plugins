@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Common.IPluginModule>
-@*@model Domain.Core.SearchParameters*@
+﻿@model Domain.Core.SearchParameters
+@using Common;
 
 @{
     Layout = null;
@@ -13,7 +13,7 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
+    @*<div> 
         @if (Model == null)
         {
             <h2>No plugins</h2>
@@ -32,30 +32,30 @@
                 <a href="@Url.Action("finder", "home")">Find...</a>
             </p>
         }
-    </div>
+    </div>*@
     <div>
-
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary()
-            @*<p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
+                                    
+            <p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
             <p>@Html.CheckBoxFor(x => x.IsSearchInSubfolders) Поиск в подкаталогах</p>
             <p>Размер:</p>
             <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
             <p>Дата:</p>
-            <p>создан: @Html.TextBoxFor(x => x.CreationDate, new { type="date" })</p>*@
+            <p>создан: @Html.TextBoxFor(x => x.CreationDate, new { type = "date" })</p>
             <p>Аттрибуты:</p>
             <p>
-                @foreach (var item in Enum.GetNames(typeof( FileAttributes)))
+                @foreach (var item in Enum.GetNames(typeof(FileAttributes)))
 	            {
-                    @Html.CheckBox(item);
+                    <p>@Html.CheckBox(item) - @Html.Label(item)</p>;
                 }
             </p>
             <p>Расширенный поиск:
-                @*@Html.DropDownListFor(x => x.WillAttend, new[] {
-                    new SelectListItem() { Text = "Да, конечно я буду", Value = Boolean.TrueString},
-                    new SelectListItem() { Text = "Нет, я не смогу", Value = Boolean.FalseString}
-                })*@
+                <p>
+                    @Html.DropDownListFor(x => x.PluginModuleId, ((IEnumerable<IPluginModule>)ViewBag.Plugins).
+                        Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString()}), "Choose plugin...")
+                </p>
             </p>
             <input type="submit" value="Искать" />
         }

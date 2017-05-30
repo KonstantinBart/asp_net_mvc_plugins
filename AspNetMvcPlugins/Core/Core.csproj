@@ -40,9 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISearchFileParameters.cs" />
     <Compile Include="ISearchParameters.cs" />
-    <Compile Include="SearchFileParameters.cs" />
     <Compile Include="SearchParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

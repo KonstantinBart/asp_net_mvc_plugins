@@ -10,7 +10,7 @@ namespace Domain.Core
         long FileLength { get; set; }
         bool IsSearchInSubfolders { get; set; }
         string FolderPath { get; set; }
-        //PluginsInitializer.FileExtension FileExtension {get; set;}
-        ISearchFileParameters searchFileParameters { get; set; }
+
+		String PluginModuleId { get; set; }
     }
 }
