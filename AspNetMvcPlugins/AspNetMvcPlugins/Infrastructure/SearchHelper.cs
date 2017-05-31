@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Common;
 using Domain.Core;
+using System.Linq;
 
 namespace AspNetMvcPlugins.Infrastructure
 {
@@ -23,7 +24,16 @@ namespace AspNetMvcPlugins.Infrastructure
 				if (action != null && action.FileExtension.Equals(item.Extension))
 					isFoundInPlugin = action.Find(item.FullName);
 
-				if (isFoundInPlugin && (item.Length < searchParameters.FileLength && item.CreationTime < searchParameters.CreationDate && item.Attributes == searchParameters.FileAttributes))
+				var checkedFileAttributes = from res in searchParameters.FileAttributes where res.IsChecked select res.Value;
+				//foreach (var attribute in checkedFileAttributes)
+				//{
+				//	if(Enum.IsDefined(typeof(FileAttributes), attribute))
+				//		fileAttributes &= (FileAttributes)attribute;
+				//}
+
+				//FileAttributes erw = (FileAttributes.Hidden & FileAttributes.IntegrityStream);
+				if (isFoundInPlugin && (item.Length < searchParameters.FileLength && item.CreationTime < searchParameters.CreationDate) )
+					//&& item.Attributes == fileAttributes)
 					result.Add(item.Name);
 			}
 			return result;
