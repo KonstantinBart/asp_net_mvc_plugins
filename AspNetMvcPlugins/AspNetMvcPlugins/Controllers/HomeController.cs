@@ -41,7 +41,7 @@ namespace AspNetMvcPlugins.Controllers
             IEnumerable<string> searchedResult = SearchHelper.TestSearch(parameters, action);
             ViewBag.SearchedFiles = searchedResult;
 
-            return View(parameters);
+            return PartialView(parameters);
 		}
 
 

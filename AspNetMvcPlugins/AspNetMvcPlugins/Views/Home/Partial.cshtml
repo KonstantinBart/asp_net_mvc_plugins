@@ -1,0 +1,8 @@
+﻿@model Domain.Core.SearchParameters
+
+<div id="results">
+    <p>Найдено:  @Html.Label(((IEnumerable<string>)ViewBag.SearchedFiles).Count().ToString())</p>
+    <p>
+        @Html.ListBox("resultList", new MultiSelectList(ViewBag.SearchedFiles))
+    </p>
+</div>
