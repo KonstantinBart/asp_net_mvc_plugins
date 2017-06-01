@@ -37,6 +37,7 @@ namespace AspNetMvcPlugins.Controllers
 			{
 				fileAttributesList.Add(new FileAttributesForCheckBox { Text = item.ToString(), Value = Convert.ToInt32(item), IsChecked = false });
 			}
+			
 			searchParameters.FileAttributes = fileAttributesList;
 
 			//searchParameters.FileAttributes = Enum.GetValues(typeof(FileAttributes)).Cast<FileAttributes>().Skip(1);

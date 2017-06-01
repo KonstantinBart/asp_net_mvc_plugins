@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Common;
 using Domain.Core;
-using System.Linq;
 
 namespace AspNetMvcPlugins.Infrastructure
 {
@@ -25,15 +25,12 @@ namespace AspNetMvcPlugins.Infrastructure
 					isFoundInPlugin = action.Find(item.FullName);
 
 				var checkedFileAttributes = from res in searchParameters.FileAttributes where res.IsChecked select res.Value;
-				//foreach (var attribute in checkedFileAttributes)
-				//{
-				//	if(Enum.IsDefined(typeof(FileAttributes), attribute))
-				//		fileAttributes &= (FileAttributes)attribute;
-				//}
 
-				//FileAttributes erw = (FileAttributes.Hidden & FileAttributes.IntegrityStream);
-				if (isFoundInPlugin && (item.Length < searchParameters.FileLength && item.CreationTime < searchParameters.CreationDate) )
-					//&& item.Attributes == fileAttributes)
+				bool hasAllFileAttributes = Enum.GetValues(typeof(FileAttributes)).Cast<FileAttributes>().
+					Where(x => item.Attributes.HasFlag(x)).Cast<int>().
+					All(x => checkedFileAttributes.Contains(x));
+
+				if (isFoundInPlugin && (item.Length < searchParameters.FileLength && item.CreationTime < searchParameters.CreationDate && hasAllFileAttributes) )
 					result.Add(item.Name);
 			}
 			return result;
