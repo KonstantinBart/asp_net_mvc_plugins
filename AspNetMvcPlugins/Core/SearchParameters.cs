@@ -13,7 +13,7 @@ namespace Domain.Core
 
         public long FileLength { get; set; }
 
-        public DateTime CreationDate { get; set; }
+		public DateTime CreationDate { get; set; }
 
 		public List<FileAttributesForCheckBox> FileAttributes { get; set; }
 

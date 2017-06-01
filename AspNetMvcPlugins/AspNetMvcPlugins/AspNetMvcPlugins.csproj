@@ -137,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{e22a4c8b-3cec-4601-8b3f-fcb7c9341a54}</Project>
+      <Project>{dc261ef3-ce24-4ae9-a094-c382260603cc}</Project>
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">

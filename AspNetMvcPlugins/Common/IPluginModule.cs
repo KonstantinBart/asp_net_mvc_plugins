@@ -1,6 +1,6 @@
 ﻿using Autofac.Core;
 
-namespace Common
+namespace Domain.Common
 {
     public interface IPluginModule : IModule
     {

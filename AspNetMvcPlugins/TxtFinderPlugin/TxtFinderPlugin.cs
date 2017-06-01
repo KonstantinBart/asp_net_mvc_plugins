@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Common;
+using Domain.Common;
 
 namespace TxtFinderPlugin
 {

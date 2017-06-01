@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Domain.Common;
 using System;
 
 namespace DocFinderPlugin

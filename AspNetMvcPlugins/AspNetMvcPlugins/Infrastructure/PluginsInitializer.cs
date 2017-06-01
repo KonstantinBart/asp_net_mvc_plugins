@@ -1,13 +1,7 @@
-﻿using Autofac;
-using Common;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using System.Web.Hosting;
-using System.Web.Mvc;
-using System.Xml;
-using System.Xml.Linq;
+using Autofac;
 
 namespace AspNetMvcPlugins.Infrastructure
 {

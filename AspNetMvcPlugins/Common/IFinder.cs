@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using Domain.Core;
 
-namespace Common
+namespace Domain.Common
 {
     public interface IFinder
     {

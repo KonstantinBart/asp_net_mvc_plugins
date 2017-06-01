@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml;
-using Common;
-using Domain.Core;
+using Domain.Common;
 
 namespace XmlFinderPlugin
 {

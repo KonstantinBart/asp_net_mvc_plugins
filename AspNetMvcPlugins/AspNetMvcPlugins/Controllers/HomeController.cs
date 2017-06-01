@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using AspNetMvcPlugins.Infrastructure;
-using Common;
+using Domain.Common;
 using Domain.Core;
 
 namespace AspNetMvcPlugins.Controllers
@@ -23,28 +22,8 @@ namespace AspNetMvcPlugins.Controllers
         {
             var modules = DependencyResolver.Current.GetServices<IPluginModule>();
 			ViewBag.Plugins = modules;
-						
-			//TODO: Get from View
-			ISearchParameters searchParameters = new SearchParameters();
-			searchParameters.FolderPath = @"C:\test\";
-			searchParameters.IsSearchInSubfolders = true;
-			searchParameters.FileLength = 10*1024;
-			searchParameters.CreationDate = DateTime.Now;
-			//searchParameters.FileAttributes = FileAttributes.Archive;
 
-			List<FileAttributesForCheckBox> fileAttributesList = new List<FileAttributesForCheckBox>();
-			foreach (var item in Enum.GetValues(typeof(FileAttributes)))
-			{
-				fileAttributesList.Add(new FileAttributesForCheckBox { Text = item.ToString(), Value = Convert.ToInt32(item), IsChecked = false });
-			}
-			
-			searchParameters.FileAttributes = fileAttributesList;
-
-			//searchParameters.FileAttributes = Enum.GetValues(typeof(FileAttributes)).Cast<FileAttributes>().Skip(1);
-
-			//var action = _actions.SingleOrDefault(m => m.FileExtension == ".txt");
-			//IEnumerable<string> searchedResult = SearchHelper.TestSearch(searchParameters, action);
-
+			ISearchParameters searchParameters = SearchHelper.FillSearchParameters();
             ViewBag.SearchedFiles = new List<string>();
 			return View(searchParameters);
         }
@@ -55,9 +34,6 @@ namespace AspNetMvcPlugins.Controllers
 		{
 			var modules = DependencyResolver.Current.GetServices<IPluginModule>();
 			ViewBag.Plugins = modules;
-            
-            //TODO: Get from View
-            //parameters.FileAttributes = FileAttributes.Archive;
 
             IFinder action = null;
             if (!String.IsNullOrEmpty(parameters.PluginModuleId))

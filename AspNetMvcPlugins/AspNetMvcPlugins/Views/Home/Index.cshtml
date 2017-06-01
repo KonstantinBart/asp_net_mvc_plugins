@@ -1,6 +1,6 @@
 ﻿@model Domain.Core.SearchParameters
 
-@using Common;
+@using Domain.Common;
 
 @{
     Layout = null;
@@ -14,26 +14,6 @@
     <title>Index</title>
 </head>
 <body>
-    @*<div> 
-        @if (Model == null)
-        {
-            <h2>No plugins</h2>
-        }
-        else
-        {
-            <h2>Plugins:</h2>
-
-            foreach (var module in Model)
-            {
-                <p>
-                    <b>@module.Name</b> - @module.ToString()
-                </p>
-            }
-            <p>
-                <a href="@Url.Action("finder", "home")">Find...</a>
-            </p>
-        }
-    </div>*@
     <div>
         @using (Html.BeginForm())
         {
@@ -44,7 +24,7 @@
             <p>Размер:</p>
             <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
             <p>Дата:</p>
-            <p>создан: @Html.TextBoxFor(x => x.CreationDate, new { type = "date" })</p>
+            <p>создан ранее: @Html.TextBoxFor(x => x.CreationDate, new { @type = "date", @Value = Model.CreationDate.ToString("yyyy-MM-dd") })</p>
             <p>Аттрибуты:</p>
             <p>
                 @for (int i = 0; i < Model.FileAttributes.Count(); i++)
@@ -62,6 +42,7 @@
             </p>
             
             <input type="submit" value="Искать" />
+            
             <p>Найдено:  @Html.Label(((IEnumerable<string>)ViewBag.SearchedFiles).Count().ToString())</p>
             <p>
                 @Html.ListBox("resultList", new MultiSelectList(ViewBag.SearchedFiles))

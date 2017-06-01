@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace Common
+namespace Domain.Common
 {
     public abstract class PluginModule : Module, IPluginModule
     {
