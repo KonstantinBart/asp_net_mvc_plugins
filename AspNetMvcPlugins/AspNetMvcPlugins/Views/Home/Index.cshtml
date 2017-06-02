@@ -1,108 +1,49 @@
-﻿@model Domain.Core.SearchParameters
-
-@using Domain.Common;
+﻿@using Domain.Common;
+@model Domain.Core.SearchParameters
 
 @{
     ViewBag.Title = "Index";
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "resultsDiv",
+        Url = Url.Action("Find"),
+        LoadingElementId = "loading"
+    };
 }
 
-    @*<div>
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary()
+@using (Ajax.BeginForm(ajaxOptions))
+ {
+    @Html.ValidationSummary()
                                     
-            <p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
-            <p>@Html.CheckBoxFor(x => x.IsSearchInSubfolders) Поиск в подкаталогах</p>
-            <p>Размер:</p>
-            <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
-            <p>Дата:</p>
-            <p>создан ранее: @Html.TextBoxFor(x => x.CreationDate, new { @type = "date", @Value = Model.CreationDate.ToString("yyyy-MM-dd") })</p>
-            <p>Аттрибуты:</p>
-            <p>
-                @for (int i = 0; i < Model.FileAttributes.Count(); i++)
-                { 
-                    @Html.CheckBoxFor(m => Model.FileAttributes[i].IsChecked)
-                    @Model.FileAttributes[i].Text
-                    @Html.HiddenFor(m => Model.FileAttributes[i].Text)
-                    @Html.HiddenFor(m => Model.FileAttributes[i].Value)
-                }
-            </p>
-            <p>Расширенный поиск:</p>
-            <p>
-                @Html.DropDownListFor(x => x.PluginModuleId, ((IEnumerable<IPluginModule>)ViewBag.Plugins).
-                    Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString() }), "Choose plugin...")
-            </p>
-            
-            <input type="submit" value="Искать" />
-            
-            <p>Найдено:  @Html.Label(((IEnumerable<string>)ViewBag.SearchedFiles).Count().ToString())</p>
-            <p>
-                @Html.ListBox("resultList", new MultiSelectList(ViewBag.SearchedFiles))
-            </p>
+    <p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
+    <p>@Html.CheckBoxFor(x => x.IsSearchInSubfolders) Поиск в подкаталогах</p>
+    <p>Размер:</p>
+    <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
+    <p>Дата:</p>
+    <p>создан ранее: @Html.TextBoxFor(x => x.CreationDate, new { @type = "date", @Value = Model.CreationDate.ToString("yyyy-MM-dd") })</p>
+    <p>Аттрибуты:</p>
+    <p>
+        @for (int i = 0; i < Model.FileAttributes.Count(); i++)
+        { 
+            @Html.CheckBoxFor(m => Model.FileAttributes[i].IsChecked)
+            @Model.FileAttributes[i].Text
+            @Html.HiddenFor(m => Model.FileAttributes[i].Text)
+            @Html.HiddenFor(m => Model.FileAttributes[i].Value)
         }
-    </div>*@
+    </p>
+    <p>Расширенный поиск:</p>
+    <p>
+        @Html.DropDownListFor(x => x.PluginModuleId, ((IEnumerable<IPluginModule>)ViewBag.Plugins).
+            Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString() }), "Choose plugin...")
+    </p>
+         
+    <button type="submit">Поиск...</button>
+ }
 
-        <script type="text/javascript">
-            function OnBegin() {
-                alert("Происходит отправка запроса");
-            }
-            function OnSuccess(data) {
-                alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
-            }
-            function OnFailure(request, error) {
-                $("#results").html("Ошибка при выполнении запроса.");
-            }
-            function OnComplete(request, status) {
-                alert("Статус запроса : " + status);
-            }
-        </script>
-        @using (Ajax.BeginForm("Index", new AjaxOptions
-        {
-            UpdateTargetId = "results",
-            OnBegin = "OnBegin",
-            OnFailure = "OnFailure",
-            OnSuccess = "OnSuccess",
-            OnComplete = "OnComplete",
-            LoadingElementId = "loading",
-            LoadingElementDuration = 1000
-        }))
-        {
-            @Html.ValidationSummary()
-                                    
-            <p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
-            <p>@Html.CheckBoxFor(x => x.IsSearchInSubfolders) Поиск в подкаталогах</p>
-            <p>Размер:</p>
-            <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
-            <p>Дата:</p>
-            <p>создан ранее: @Html.TextBoxFor(x => x.CreationDate, new { @type = "date", @Value = Model.CreationDate.ToString("yyyy-MM-dd") })</p>
-            <p>Аттрибуты:</p>
-            <p>
-                @for (int i = 0; i < Model.FileAttributes.Count(); i++)
-                { 
-                    @Html.CheckBoxFor(m => Model.FileAttributes[i].IsChecked)
-                    @Model.FileAttributes[i].Text
-                    @Html.HiddenFor(m => Model.FileAttributes[i].Text)
-                    @Html.HiddenFor(m => Model.FileAttributes[i].Value)
-                }
-            </p>
-            <p>Расширенный поиск:</p>
-            <p>
-                @Html.DropDownListFor(x => x.PluginModuleId, ((IEnumerable<IPluginModule>)ViewBag.Plugins).
-                    Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString() }), "Choose plugin...")
-            </p>
-            
-            <input type="submit" value="Поиск..." />
-            
-            @*<p>Найдено:  @Html.Label(((IEnumerable<string>)ViewBag.SearchedFiles).Count().ToString())</p>
-            <p>
-                @Html.ListBox("resultList", new MultiSelectList(ViewBag.SearchedFiles))
-            </p>*@
-        }
-    
+<div id="resultsDiv">
+    @Html.Action("Find", new { parameters = Model })
+</div>
 
-    <div id="loading" style="display:none; color:Red; font-weight:bold;">
-        <p>Идет поиск...</p>
-    </div>
-    @Html.Partial("Partial")
-        
-
+<div id="loading" style="display: none; color: Red; font-weight: bold;">
+    <p>Идет поиск...</p>
+</div>

@@ -1,0 +1,6 @@
+﻿@model IEnumerable<string>
+
+<p>Найдено:  @Html.Label(Model.Count().ToString())</p>
+<p>
+    @Html.ListBox("resultList", new MultiSelectList(Model))
+</p>
