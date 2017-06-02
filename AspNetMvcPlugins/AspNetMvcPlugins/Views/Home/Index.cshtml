@@ -7,7 +7,11 @@
     {
         UpdateTargetId = "resultsDiv",
         Url = Url.Action("Find"),
-        LoadingElementId = "loading"
+        LoadingElementId = "loading",
+        OnBegin = "OnBegin",
+        OnFailure = "OnFailure",
+        OnSuccess = "OnSuccess",
+        OnComplete = "OnComplete"
     };
 }
 
@@ -37,7 +41,8 @@
             Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString() }), "Choose plugin...")
     </p>
          
-    <button type="submit">Поиск...</button>
+    
+    <input type="submit" id="findButton" value="Искать" />
  }
 
 <div id="resultsDiv">
@@ -47,3 +52,21 @@
 <div id="loading" style="display: none; color: Red; font-weight: bold;">
     <p>Идет поиск...</p>
 </div>
+
+@section scripts{
+    <script>
+        function OnBegin() {
+            alert("Происходит отправка запроса");
+            //$("#findButton").
+        }
+        function OnSuccess(data) {
+            alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
+        }
+        function OnFailure(request, error) {
+            $("#resultsDiv").html("Ошибка выполнения поиска.");
+        }
+        function OnComplete(request, status) {
+            alert("Статус запроса : " + status);
+        }
+    </script>
+}
