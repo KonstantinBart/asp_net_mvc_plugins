@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Domain.Common;
+using System.Threading.Tasks;
 
 namespace TxtFinderPlugin
 {
@@ -11,13 +12,13 @@ namespace TxtFinderPlugin
             get { return ".txt"; }
         }
 
-		public bool Find(String fileName)
+        public async Task<bool> Find(String fileName)
 		{
 			try
 			{
 				using (StreamReader sr = new StreamReader(fileName))
 				{
-					String fileContents = sr.ReadToEnd();
+                    var fileContents = await sr.ReadToEndAsync();
 					if (fileContents.Contains(SearchPattern))
 						return true;
 				}

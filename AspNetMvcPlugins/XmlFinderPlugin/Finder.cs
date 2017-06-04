@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using Domain.Common;
+using System.Threading.Tasks;
 
 namespace XmlFinderPlugin
 {
@@ -11,7 +12,7 @@ namespace XmlFinderPlugin
 			get { return ".xml"; }
 		}
 
-		public bool Find(String fileName)
+        public async Task<bool> Find(String fileName)
 		{
 			try
 			{

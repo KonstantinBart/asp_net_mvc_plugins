@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using System;
+using System.Threading.Tasks;
 
 namespace DocFinderPlugin
 {
@@ -10,7 +11,7 @@ namespace DocFinderPlugin
             get { return ".doc"; }
         }
 
-        public bool Find(String fileName)
+        public async Task<bool> Find(String fileName)
 		{
 			throw new System.NotImplementedException();
 		}

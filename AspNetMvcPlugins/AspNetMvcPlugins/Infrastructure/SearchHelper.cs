@@ -1,16 +1,22 @@
-﻿using System;
+﻿using Domain.Common;
+using Domain.Core;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Domain.Common;
-using Domain.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AspNetMvcPlugins.Infrastructure
 {
     public static class SearchHelper
     {
-		internal static IEnumerable<String> TestSearch(ISearchParameters searchParameters, IFinder action)
+
+        internal static async Task<List<String>> SearchWithCancel(ISearchParameters searchParameters, IFinder action, 
+            CancellationToken token)
 		{
+
 			List<String> result = new List<String>();
 
 			try
@@ -21,7 +27,12 @@ namespace AspNetMvcPlugins.Infrastructure
 				var files = folder.GetFiles("*", searchParameters.IsSearchInSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 				foreach (var item in files)
 				{
-					if (IsFoundByPlugin(action, item) && CheckByParameters(searchParameters, item))
+                    if (token.IsCancellationRequested)
+                    {
+                        Debug.WriteLine("Операция прервана. Прочитано {0} файлов", result.Count);
+                        return result;
+                    }
+					if (await IsFoundByPlugin(action, item) && CheckByParameters(searchParameters, item))
 						result.Add(item.Name);
 				}
 			}
@@ -32,12 +43,12 @@ namespace AspNetMvcPlugins.Infrastructure
 			return result;
 		}
 
-		private static bool IsFoundByPlugin(IFinder action, FileInfo item)
+		private static async Task<bool> IsFoundByPlugin(IFinder action, FileInfo item)
 		{
 			bool isFoundInPlugin = (action == null);
 
 			if (action != null && action.FileExtension.Equals(item.Extension))
-				isFoundInPlugin = action.Find(item.FullName);
+				isFoundInPlugin = await action.Find(item.FullName);
 			return isFoundInPlugin;
 		}
 

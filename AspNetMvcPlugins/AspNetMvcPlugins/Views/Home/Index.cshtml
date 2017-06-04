@@ -40,9 +40,11 @@
         @Html.DropDownListFor(x => x.PluginModuleId, ((IEnumerable<IPluginModule>)ViewBag.Plugins).
             Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString() }), "Choose plugin...")
     </p>
-         
-    
-    <input type="submit" id="findButton" value="Искать" />
+    <input type="submit" id="findButton" value="Искать..." />
+    <br />
+    <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="GetData()" />
+    <input type="submit" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
+    <input type="submit" id="etet0" value="Test" onclick="startTest()" />
  }
 
 <div id="resultsDiv">
@@ -56,17 +58,44 @@
 @section scripts{
     <script>
         function OnBegin() {
-            alert("Происходит отправка запроса");
-            //$("#findButton").
+            //alert("Происходит отправка запроса");
+            //$("#findButton").attr('value', 'Остановить поиск');
         }
         function OnSuccess(data) {
-            alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
+            //alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
         }
         function OnFailure(request, error) {
             $("#resultsDiv").html("Ошибка выполнения поиска.");
         }
         function OnComplete(request, status) {
-            alert("Статус запроса : " + status);
+            //alert("Статус запроса : " + status);
+            //$("#findButton").attr('value', 'Искать...');
+        }
+        function cancelSearch() {
+            alert("Cancel occured!");
+            syncMethod.abort();
+        }
+
+        var syncMethod;
+        function GetData() {
+            syncMethod = $.ajax({
+                cache: false,
+                url: 'Home/Find',
+                type: "POST"
+            });
+        }
+
+        function startTest() {
+            var xhr = $.ajax({
+                cache: false,
+                url: 'Home/Find',
+                type: "POST"
+            });
+            
+            setTimeout(function () {
+                xhr.abort();
+                alert('Test aborted');
+            }, 10);
         }
     </script>
 }
