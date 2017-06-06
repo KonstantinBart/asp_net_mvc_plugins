@@ -67,7 +67,7 @@ namespace AspNetMvcPlugins.Infrastructure
 		internal static ISearchParameters FillSearchParameters()
 		{
 			ISearchParameters searchParameters = new SearchParameters();
-			searchParameters.FolderPath = @"C:\test\";
+			searchParameters.FolderPath = @"C:\Test\";
 			searchParameters.IsSearchInSubfolders = true;
 			searchParameters.FileLength = 10 * 1024;
 			searchParameters.CreationDate = DateTime.Now.Date;
@@ -75,7 +75,7 @@ namespace AspNetMvcPlugins.Infrastructure
 			List<FileAttributesForCheckBox> fileAttributesList = new List<FileAttributesForCheckBox>();
 			foreach (var item in Enum.GetValues(typeof(FileAttributes)))
 			{
-				fileAttributesList.Add(new FileAttributesForCheckBox { Text = item.ToString(), Value = Convert.ToInt32(item), IsChecked = false });
+				fileAttributesList.Add(new FileAttributesForCheckBox { Text = item.ToString(), Value = Convert.ToInt32(item), IsChecked = true });
 			}
 			searchParameters.FileAttributes = fileAttributesList;
 

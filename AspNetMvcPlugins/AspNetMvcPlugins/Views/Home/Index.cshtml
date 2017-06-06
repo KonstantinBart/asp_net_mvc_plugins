@@ -43,12 +43,12 @@
     <input type="submit" id="findButton" value="Искать..." />
     <br />
     <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="GetData()" />
-    <input type="submit" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
+    <input type="button" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
     <input type="submit" id="etet0" value="Test" onclick="startTest()" />
  }
 
 <div id="resultsDiv">
-    @Html.Action("Find", new { parameters = Model })
+    @*@Html.Action("Find", new { parameters = Model })*@
 </div>
 
 <div id="loading" style="display: none; color: Red; font-weight: bold;">
@@ -60,6 +60,7 @@
         function OnBegin() {
             //alert("Происходит отправка запроса");
             //$("#findButton").attr('value', 'Остановить поиск');
+            $("#findButton").prop('disabled', true);
         }
         function OnSuccess(data) {
             //alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
@@ -70,6 +71,7 @@
         function OnComplete(request, status) {
             //alert("Статус запроса : " + status);
             //$("#findButton").attr('value', 'Искать...');
+            $("#findButton").prop('disabled', false);
         }
         function cancelSearch() {
             alert("Cancel occured!");

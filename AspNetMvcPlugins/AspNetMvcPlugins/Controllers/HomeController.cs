@@ -30,7 +30,7 @@ namespace AspNetMvcPlugins.Controllers
 			return View(searchParameters);
 		}
 
-        public async Task<PartialViewResult> Find(SearchParameters parameters, CancellationToken cancellationToken)
+		public async Task<PartialViewResult> Find(SearchParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var modules = DependencyResolver.Current.GetServices<IPluginModule>();
 			ViewBag.Plugins = modules;
@@ -39,8 +39,8 @@ namespace AspNetMvcPlugins.Controllers
 			if (!String.IsNullOrEmpty(parameters.PluginModuleId))
 				action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.PluginModuleId));
 
-            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-            CancellationToken token = cancelTokenSource.Token;
+			//CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+			//CancellationToken token = cancelTokenSource.Token;
 
             //var token = CancellationTokenSource.CreateLinkedTokenSource(
             //    Response.ClientDisconnectedToken, Request.TimedOutToken);
@@ -48,16 +48,16 @@ namespace AspNetMvcPlugins.Controllers
             //var token = CancellationTokenSource.CreateLinkedTokenSource(
             //    cancellationToken, Response.ClientDisconnectedToken).Token;
 
-            if (token.IsCancellationRequested)
-            {
-                return null;
-            }
+			//if (token.IsCancellationRequested)
+			//{
+			//	return null;
+			//}
             //Check cancellation
             //Thread.Sleep(1);
             //cancelTokenSource.Cancel();
-			var searchedResult = await SearchHelper.SearchWithCancel(parameters, action, token);
+			//var searchedResult = await SearchHelper.SearchWithCancel(parameters, action, token);
 			
-            return PartialView(searchedResult);
+            return PartialView(await SearchHelper.SearchWithCancel(parameters, action, cancellationToken));
 		}
 
 	}
