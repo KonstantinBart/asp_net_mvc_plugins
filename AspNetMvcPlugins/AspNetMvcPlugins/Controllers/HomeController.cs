@@ -57,7 +57,7 @@ namespace AspNetMvcPlugins.Controllers
             //cancelTokenSource.Cancel();
 			//var searchedResult = await SearchHelper.SearchWithCancel(parameters, action, token);
 			
-            return PartialView(await SearchHelper.SearchWithCancel(parameters, action, cancellationToken));
+            return PartialView(await SearchHelper.AsyncSearchByParameters(parameters, action, cancellationToken));
 		}
 
 	}

@@ -1,1 +1,17 @@
-﻿
+﻿#resultList
+{
+    height: 500px;
+}
+
+#loading
+{
+    float:left;
+    display: none; 
+    color: Red; 
+    font-weight: bold;
+}
+
+#resultsDiv
+{
+    clear:both;
+}

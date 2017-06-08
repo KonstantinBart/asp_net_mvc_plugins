@@ -40,20 +40,24 @@
         @Html.DropDownListFor(x => x.PluginModuleId, ((IEnumerable<IPluginModule>)ViewBag.Plugins).
             Select(x => new SelectListItem() { Text = x.Name, Value = x.ToString() }), "Choose plugin...")
     </p>
-    <input type="submit" id="findButton" value="Искать..." />
+    <div>
+        <input type="submit" id="findButton" value="Искать..." />
+    </div>
+    <div id="loading">
+        <p>Идет поиск...</p>
+    </div>
+    @*
     <br />
     <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="GetData()" />
     <input type="button" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
-    <input type="submit" id="etet0" value="Test" onclick="startTest()" />
+    <input type="submit" id="etet0" value="Test" onclick="startTest()" />*@
  }
 
 <div id="resultsDiv">
     @*@Html.Action("Find", new { parameters = Model })*@
 </div>
 
-<div id="loading" style="display: none; color: Red; font-weight: bold;">
-    <p>Идет поиск...</p>
-</div>
+
 
 @section scripts{
     <script>
@@ -73,31 +77,33 @@
             //$("#findButton").attr('value', 'Искать...');
             $("#findButton").prop('disabled', false);
         }
-        function cancelSearch() {
-            alert("Cancel occured!");
-            syncMethod.abort();
-        }
 
-        var syncMethod;
-        function GetData() {
-            syncMethod = $.ajax({
-                cache: false,
-                url: 'Home/Find',
-                type: "POST"
-            });
-        }
 
-        function startTest() {
-            var xhr = $.ajax({
-                cache: false,
-                url: 'Home/Find',
-                type: "POST"
-            });
+        //var syncMethod;
+        //function GetData() {
+        //    syncMethod = $.ajax({
+        //        cache: false,
+        //        url: 'Home/Find',
+        //        type: "POST"
+        //    });
+        //}
+
+        //function cancelSearch() {
+        //    alert("Cancel occured!");
+        //    syncMethod.abort();
+        //}
+
+        //function startTest() {
+        //    var xhr = $.ajax({
+        //        cache: false,
+        //        url: 'Home/Find',
+        //        type: "POST"
+        //    });
             
-            setTimeout(function () {
-                xhr.abort();
-                alert('Test aborted');
-            }, 10);
-        }
+        //    setTimeout(function () {
+        //        xhr.abort();
+        //        alert('Test aborted');
+        //    }, 10);
+        //}
     </script>
 }

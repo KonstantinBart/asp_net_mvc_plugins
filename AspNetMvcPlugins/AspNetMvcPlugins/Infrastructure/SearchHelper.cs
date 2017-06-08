@@ -13,10 +13,15 @@ namespace AspNetMvcPlugins.Infrastructure
     public static class SearchHelper
     {
 
-        internal static async Task<List<String>> SearchWithCancel(ISearchParameters searchParameters, IFinder action, 
+        internal static async Task<List<String>> AsyncSearchByParameters(ISearchParameters searchParameters, IFinder action, 
             CancellationToken token)
 		{
+			return await Task.Run(() => AsyncSearch(searchParameters, action, token));
+		}
 
+		internal static async Task<List<String>> AsyncSearch(ISearchParameters searchParameters, IFinder action,
+			CancellationToken token)
+		{
 			List<String> result = new List<String>();
 
 			try
@@ -27,11 +32,11 @@ namespace AspNetMvcPlugins.Infrastructure
 				var files = folder.GetFiles("*", searchParameters.IsSearchInSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 				foreach (var item in files)
 				{
-                    if (token.IsCancellationRequested)
-                    {
-                        Debug.WriteLine("Операция прервана. Прочитано {0} файлов", result.Count);
-                        return result;
-                    }
+					if (token.IsCancellationRequested)
+					{
+						Debug.WriteLine("Операция прервана. Прочитано {0} файлов", result.Count);
+						return result;
+					}
 					if (await IsFoundByPlugin(action, item) && CheckByParameters(searchParameters, item))
 						result.Add(item.Name);
 				}
@@ -39,6 +44,7 @@ namespace AspNetMvcPlugins.Infrastructure
 			catch (Exception ex)
 			{
 				//TODO: Add to log...
+				Debug.WriteLine("Exception: {0}", ex.Message);
 			}
 			return result;
 		}
