@@ -2,11 +2,15 @@
 using Autofac.Integration.Mvc;
 using System.Web.Mvc;
 using AspNetMvcPlugins.Infrastructure;
+using System.Web;
+using System.Diagnostics;
 
 namespace AspNetMvcPlugins.App_Start
 {
     public static class AutofacRegistrator
     {
+		public static IContainer Container { get; private set; }
+
         public static void Init()
         {
             var builder = new ContainerBuilder();
@@ -35,6 +39,7 @@ namespace AspNetMvcPlugins.App_Start
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
+			Container = container;
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }

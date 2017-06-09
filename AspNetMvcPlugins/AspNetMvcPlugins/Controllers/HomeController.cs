@@ -27,6 +27,7 @@ namespace AspNetMvcPlugins.Controllers
 
 			ISearchParameters searchParameters = SearchHelper.FillSearchParameters();
 			ViewBag.SearchedFiles = new List<string>();
+			
 			return View(searchParameters);
 		}
 
