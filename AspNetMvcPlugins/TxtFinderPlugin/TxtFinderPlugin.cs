@@ -12,7 +12,7 @@ namespace TxtFinderPlugin
 
         protected override void Load(ContainerBuilder builder)
         {
-			builder.RegisterType<Finder>().As<IFinder>();
+            builder.RegisterType<Finder>().As<IFinder>().IfNotRegistered(typeof(TxtFinderPlugin)); ;
         }
     }
 }

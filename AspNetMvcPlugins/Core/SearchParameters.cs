@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 
 namespace Domain.Core
 {
@@ -17,7 +15,6 @@ namespace Domain.Core
 
 		public List<FileAttributesForCheckBox> FileAttributes { get; set; }
 
-		public string PluginModuleId { get; set; }
-
+		public string SelectedPluginModule { get; set; }
 	}
 }

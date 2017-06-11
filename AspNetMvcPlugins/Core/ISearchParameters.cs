@@ -11,6 +11,6 @@ namespace Domain.Core
         bool IsSearchInSubfolders { get; set; }
         string FolderPath { get; set; }
 		List<FileAttributesForCheckBox> FileAttributes { get; set; }
-		String PluginModuleId { get; set; }
+		String SelectedPluginModule { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Xml;
 using Domain.Common;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace XmlFinderPlugin
 {
@@ -29,7 +30,7 @@ namespace XmlFinderPlugin
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("The XML file could not be read.");
+				Debug.WriteLine("The XML file could not be read. {0}", e.Message);
 			}
 			return false;
 		}

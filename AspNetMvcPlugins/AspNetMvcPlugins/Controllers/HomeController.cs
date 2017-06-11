@@ -1,4 +1,5 @@
-﻿using AspNetMvcPlugins.Infrastructure;
+﻿using AspNetMvcPlugins.App_Start;
+using AspNetMvcPlugins.Infrastructure;
 using Domain.Common;
 using Domain.Core;
 using System;
@@ -22,8 +23,7 @@ namespace AspNetMvcPlugins.Controllers
 		[HttpGet]
 		public ActionResult Index()
 		{
-			var modules = DependencyResolver.Current.GetServices<IPluginModule>();
-			ViewBag.Plugins = modules;
+            PopulateModules("");
 
 			ISearchParameters searchParameters = SearchHelper.FillSearchParameters();
 			ViewBag.SearchedFiles = new List<string>();
@@ -37,8 +37,8 @@ namespace AspNetMvcPlugins.Controllers
 			ViewBag.Plugins = modules;
 
 			IFinder action = null;
-			if (!String.IsNullOrEmpty(parameters.PluginModuleId))
-				action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.PluginModuleId));
+			if (!String.IsNullOrEmpty(parameters.SelectedPluginModule))
+				action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.SelectedPluginModule));
 
 			//CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
 			//CancellationToken token = cancelTokenSource.Token;
@@ -60,6 +60,36 @@ namespace AspNetMvcPlugins.Controllers
 			
             return PartialView(await SearchHelper.AsyncSearchByParameters(parameters, action, cancellationToken));
 		}
+
+        public JsonResult RefreshModules(string selectedValue)
+        {
+            AutofacRegistrator.Init();
+            return PopulateModules(selectedValue);
+        }
+
+        public JsonResult PopulateModules(string selectedValue)
+        {
+            var modules = DependencyResolver.Current.GetServices<IPluginModule>();
+            List<SelectListItem> modulesDropDown = FillModulesDropDown(modules, selectedValue);
+            ViewBag.ModulesDropDown = modulesDropDown;
+
+            return Json(modulesDropDown, JsonRequestBehavior.AllowGet);
+        }
+
+        private static List<SelectListItem> FillModulesDropDown(IEnumerable<IPluginModule> modules, string selectedValue)
+        {
+            List<SelectListItem> result = new List<SelectListItem>();
+            result.Add(new SelectListItem() { Text = "Choose plugin...", Value = "", Selected = false });
+            result.AddRange( 
+                modules.Select(i => new SelectListItem()
+                    {
+                        Text = i.Name,
+                        Value = i.ToString(),
+                        Selected = selectedValue.Equals(i.ToString())
+                    })
+            );
+            return result;
+        }
 
 	}
 }

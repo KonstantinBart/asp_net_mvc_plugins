@@ -138,7 +138,6 @@
     </Compile>
     <Compile Include="Infrastructure\PluginsInitializer.cs" />
     <Compile Include="Infrastructure\SearchHelper.cs" />
-    <Compile Include="Infrastructure\RefreshModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 using System.IO;
 using Domain.Common;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace TxtFinderPlugin
 {
@@ -25,7 +26,7 @@ namespace TxtFinderPlugin
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("The TXT file could not be read.");
+				Debug.WriteLine("The TXT file could not be read. {0}", e.Message);
 			}
 			return false;
 		}

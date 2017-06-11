@@ -1,9 +1,7 @@
-﻿using Autofac;
+﻿using AspNetMvcPlugins.Infrastructure;
+using Autofac;
 using Autofac.Integration.Mvc;
 using System.Web.Mvc;
-using AspNetMvcPlugins.Infrastructure;
-using System.Web;
-using System.Diagnostics;
 
 namespace AspNetMvcPlugins.App_Start
 {
