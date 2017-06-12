@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace DocFinderPlugin
+namespace MvcPlugin
 {
     public class Finder : IFinder
     {
@@ -18,7 +18,8 @@ namespace DocFinderPlugin
 
         public string SearchPattern
         {
-            get { return "doc search pattern"; }
+            get;
+            set;
         }
     }
 }

@@ -13,7 +13,16 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
-    @RenderBody()
+    <div>
+        <h3>Поиск файлов на диске</h3>
+    </div>
+@*    <div id="nav">
+        @Html.ActionLink("Home","Index","Home", new {Area=""}, null)
+    </div>*@
+    <hr />
+    <div>
+        @RenderBody()
+    </div>
     @RenderSection("scripts", false)
 </body>
 </html>

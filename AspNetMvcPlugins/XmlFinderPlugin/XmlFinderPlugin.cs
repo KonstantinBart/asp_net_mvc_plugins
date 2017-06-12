@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Domain.Common;
 
-namespace XmlFinderPlugin
+namespace MvcPlugin
 {
 	public class XmlFinderPlugin : PluginModule
 	{

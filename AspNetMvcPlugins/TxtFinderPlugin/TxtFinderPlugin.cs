@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Domain.Common;
 
-namespace TxtFinderPlugin
+namespace MvcPlugin
 {
     public class TxtFinderPlugin : PluginModule
     {

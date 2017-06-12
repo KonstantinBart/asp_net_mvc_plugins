@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Domain.Common;
 
-namespace DocFinderPlugin
+namespace MvcPlugin
 {
     public class DocFinderPlugin : PluginModule
     {

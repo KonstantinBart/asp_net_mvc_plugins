@@ -43,7 +43,6 @@ namespace AspNetMvcPlugins.Infrastructure
 			}
 			catch (Exception ex)
 			{
-				//TODO: Add to log...
 				Debug.WriteLine("Exception: {0}", ex.Message);
 			}
 			return result;

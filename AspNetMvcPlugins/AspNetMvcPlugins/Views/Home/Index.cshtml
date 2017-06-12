@@ -38,7 +38,22 @@
     <p>Расширенный поиск:</p>
     <p>
         @Html.DropDownList("SelectedPluginModule", ViewBag.ModulesDropDown as IEnumerable<SelectListItem>, new { @id = "SelectedPluginModule" })
+        Строка для поиска: @Html.TextBox("SearchPattern")
     </p>
+    
+    
+    @*<ul>
+        @{
+            var modules = DependencyResolver.Current.GetServices<IPluginModule>();   
+        }
+        @foreach (var plugin in modules)
+        {
+            <li>
+                @Html.ActionLink(plugin.Name, "Index", plugin.ControllerName, null, new { @class = "truncate", title = plugin.Name })
+            </li>
+        }
+    </ul>*@
+    
     <div>
         <input type="submit" id="findButton" value="Искать..." />
     </div>
@@ -47,19 +62,16 @@
     </div>
     @*
     <br />
-    <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="GetData()" />
+    <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="getData()" />
     <input type="button" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
-    <input type="submit" id="etet0" value="Test" onclick="startTest()" />*@
+    *@
  }
 
-<div id="resultsDiv">
-    @*@Html.Action("Find", new { parameters = Model })*@
-</div>
+<div id="resultsDiv"></div>
 
 @section scripts{
     <script>
         function OnBegin() {
-            //alert("Происходит отправка запроса");
             //$("#findButton").attr('value', 'Остановить поиск');
             $("#findButton").prop('disabled', true);
         }
@@ -67,17 +79,16 @@
             //alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
         }
         function OnFailure(request, error) {
-            $("#resultsDiv").html("Ошибка выполнения поиска.");
+            $("#resultsDiv").html("Ошибка выполнения поиска!");
         }
         function OnComplete(request, status) {
-            //alert("Статус запроса : " + status);
             //$("#findButton").attr('value', 'Искать...');
             $("#findButton").prop('disabled', false);
         }
 
 
         //var syncMethod;
-        //function GetData() {
+        //function getData() {
         //    syncMethod = $.ajax({
         //        cache: false,
         //        url: 'Home/Find',
@@ -90,26 +101,13 @@
         //    syncMethod.abort();
         //}
 
-        //function startTest() {
-        //    var xhr = $.ajax({
-        //        cache: false,
-        //        url: 'Home/Find',
-        //        type: "POST"
-        //    });
-            
-        //    setTimeout(function () {
-        //        xhr.abort();
-        //        alert('Test aborted');
-        //    }, 10);
-        //}
-
-        var timer = setInterval(updateDiv, 10000);
+        var timer = setInterval(updateDiv, 5000);
         function updateDiv() {
             var url = '@Url.Action("RefreshModules")';
             var ddl = $("#SelectedPluginModule");
 
             $.getJSON(url, { selectedValue: ddl.val()}, function (response) {
-                ddl.empty(); // remove any existing options
+                ddl.empty();
                 $.each(response, function (index, item) {
                     ddl.append($('<option></option>').val(item.Value).html(item.Text).prop('selected', item.Selected))
                 });

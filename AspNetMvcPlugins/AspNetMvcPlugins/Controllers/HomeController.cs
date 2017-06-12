@@ -18,6 +18,7 @@ namespace AspNetMvcPlugins.Controllers
 		public HomeController(IEnumerable<IFinder> actions)
 		{
 			_actions = actions;
+            RazorGeneratorMvcStart.Start();
 		}
 
 		[HttpGet]
@@ -31,32 +32,22 @@ namespace AspNetMvcPlugins.Controllers
 			return View(searchParameters);
 		}
 
-		public async Task<PartialViewResult> Find(SearchParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<PartialViewResult> Find(SearchParameters parameters, String SearchPattern, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			var modules = DependencyResolver.Current.GetServices<IPluginModule>();
-			ViewBag.Plugins = modules;
+			//var modules = DependencyResolver.Current.GetServices<IPluginModule>();
+            //ViewBag.Plugins = modules;
 
 			IFinder action = null;
-			if (!String.IsNullOrEmpty(parameters.SelectedPluginModule))
-				action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.SelectedPluginModule));
+            if (!String.IsNullOrEmpty(parameters.SelectedPluginModule))
+            {
+                action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.SelectedPluginModule));
+                //TODO: Fix it with Razor Generator
+                action.SearchPattern = SearchPattern;
+            }
 
-			//CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-			//CancellationToken token = cancelTokenSource.Token;
-
+            //TODO: Fix cancellation
             //var token = CancellationTokenSource.CreateLinkedTokenSource(
             //    Response.ClientDisconnectedToken, Request.TimedOutToken);
-
-            //var token = CancellationTokenSource.CreateLinkedTokenSource(
-            //    cancellationToken, Response.ClientDisconnectedToken).Token;
-
-			//if (token.IsCancellationRequested)
-			//{
-			//	return null;
-			//}
-            //Check cancellation
-            //Thread.Sleep(1);
-            //cancelTokenSource.Cancel();
-			//var searchedResult = await SearchHelper.SearchWithCancel(parameters, action, token);
 			
             return PartialView(await SearchHelper.AsyncSearchByParameters(parameters, action, cancellationToken));
 		}

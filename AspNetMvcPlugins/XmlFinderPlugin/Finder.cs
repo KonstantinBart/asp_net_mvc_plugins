@@ -4,7 +4,7 @@ using Domain.Common;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace XmlFinderPlugin
+namespace MvcPlugin
 {
 	public class Finder : IFinder
 	{
@@ -35,10 +35,11 @@ namespace XmlFinderPlugin
 			return false;
 		}
 
-		public string SearchPattern
-		{
-			get { return "The Sundered Grail"; }
-		}
+        public string SearchPattern
+        {
+            get;
+            set;
+        }
 
 	}
 }

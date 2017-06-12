@@ -9,5 +9,9 @@ namespace Domain.Common
             get { return GetType().Name; }
         }
 
+        public virtual string ControllerName
+        {
+            get { return GetType().Name; }
+        }
     }
 }

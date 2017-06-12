@@ -4,7 +4,7 @@ using Domain.Common;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace TxtFinderPlugin
+namespace MvcPlugin
 {
     public class Finder : IFinder
     {
@@ -31,10 +31,11 @@ namespace TxtFinderPlugin
 			return false;
 		}
 
-		public string SearchPattern
-		{
-			get { return "test string"; }
-		}
+        public string SearchPattern
+        {
+            get;
+            set;
+        }
 
 	}
 }

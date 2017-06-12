@@ -8,6 +8,6 @@ namespace Domain.Common
     {
         Task<bool> Find(String fileName);
         String FileExtension { get; }
-		String SearchPattern { get; }
+        String SearchPattern { get; set; }
     }
 }

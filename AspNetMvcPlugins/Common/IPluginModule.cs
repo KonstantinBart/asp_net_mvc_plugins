@@ -5,5 +5,7 @@ namespace Domain.Common
     public interface IPluginModule : IModule
     {
         string Name { get; }
+        
+        string ControllerName { get; }
     }
 }
