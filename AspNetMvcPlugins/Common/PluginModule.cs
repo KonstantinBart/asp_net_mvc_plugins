@@ -11,7 +11,7 @@ namespace Domain.Common
 
         public virtual string ControllerName
         {
-            get { return GetType().Name; }
+			get { return GetType().Name.Substring(0, 3); }
         }
     }
 }

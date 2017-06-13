@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TxtFinderPlugin.Views.TxtFinderPlugin
+namespace MvcPlugin.Views.Txt
 {
     using System;
     using System.Collections.Generic;
@@ -28,8 +28,8 @@ namespace TxtFinderPlugin.Views.TxtFinderPlugin
     using System.Web.WebPages;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TxtFinderPlugin/Index.cshtml")]
-    public partial class Index : System.Web.Mvc.WebViewPage<MvcPlugin.Finder>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Txt/Index.cshtml")]
+    public partial class Index : System.Web.Mvc.WebViewPage<dynamic>
     {
         public Index()
         {
@@ -37,11 +37,12 @@ namespace TxtFinderPlugin.Views.TxtFinderPlugin
         public override void Execute()
         {
 
-WriteLiteral("\r\n");
+
+WriteLiteral("\r\n\r\n");
 
 
             
-            #line 3 "..\..\Views\TxtFinderPlugin\Index.cshtml"
+            #line 3 "..\..\Views\Txt\Index.cshtml"
   
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -50,16 +51,10 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n<h1>eeeeeeeeeeehaaa</h1>\r\n");
 
 
-            
-            #line 8 "..\..\Views\TxtFinderPlugin\Index.cshtml"
-Write(Html.TextBoxFor(x => x.SearchPattern));
 
-            
-            #line default
-            #line hidden
 WriteLiteral("\r\n");
 
 

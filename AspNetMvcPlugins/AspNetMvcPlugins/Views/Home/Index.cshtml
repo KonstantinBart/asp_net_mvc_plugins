@@ -41,19 +41,6 @@
         Строка для поиска: @Html.TextBox("SearchPattern")
     </p>
     
-    
-    @*<ul>
-        @{
-            var modules = DependencyResolver.Current.GetServices<IPluginModule>();   
-        }
-        @foreach (var plugin in modules)
-        {
-            <li>
-                @Html.ActionLink(plugin.Name, "Index", plugin.ControllerName, null, new { @class = "truncate", title = plugin.Name })
-            </li>
-        }
-    </ul>*@
-    
     <div>
         <input type="submit" id="findButton" value="Искать..." />
     </div>

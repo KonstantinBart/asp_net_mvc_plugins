@@ -16,7 +16,7 @@ namespace MvcPlugin
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "TxtFinderPlugin", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Txt", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

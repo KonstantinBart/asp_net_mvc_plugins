@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace WebApplication2.Controllers
 {
-    public class TxtFinderPluginController : Controller
+    public class TxtController : Controller
     {
         //
         // GET: /MVC/

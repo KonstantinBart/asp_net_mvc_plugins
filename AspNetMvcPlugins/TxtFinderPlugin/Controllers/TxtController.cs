@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace MvcPlugin
 {
-    public class TxtFinderPluginController : Controller
+    public class TxtController : Controller
     {
         public ActionResult Index()
         {

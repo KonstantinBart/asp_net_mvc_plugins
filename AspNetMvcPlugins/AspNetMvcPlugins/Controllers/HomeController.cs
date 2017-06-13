@@ -18,7 +18,6 @@ namespace AspNetMvcPlugins.Controllers
 		public HomeController(IEnumerable<IFinder> actions)
 		{
 			_actions = actions;
-            RazorGeneratorMvcStart.Start();
 		}
 
 		[HttpGet]

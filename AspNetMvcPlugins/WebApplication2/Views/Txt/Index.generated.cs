@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication2.Views.TxtFinderPlugin
+namespace WebApplication2.Views.Txt
 {
     using System;
     using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace WebApplication2.Views.TxtFinderPlugin
     using System.Web.WebPages;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TxtFinderPlugin/Index.cshtml")]
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Txt/Index.cshtml")]
     public partial class Index : System.Web.Mvc.WebViewPage<WebApplication2.Finder>
     {
         public Index()
@@ -41,7 +41,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 3 "..\..\Views\TxtFinderPlugin\Index.cshtml"
+            #line 3 "..\..\Views\Txt\Index.cshtml"
   
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -54,7 +54,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 8 "..\..\Views\TxtFinderPlugin\Index.cshtml"
+            #line 8 "..\..\Views\Txt\Index.cshtml"
 Write(Html.TextBoxFor(x => x.SearchPattern));
 
             
