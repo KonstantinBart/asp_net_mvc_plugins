@@ -38,7 +38,7 @@ namespace AspNetMvcPlugins.App_Start
             //builder.InjectActionInvoker();
             try
             {
-                builder.Initialize();
+                builder.RegisterPlugins();
             }
             catch (Exception e)
             {
