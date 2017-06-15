@@ -11,7 +11,7 @@ namespace AspNetMvcPlugins.Infrastructure
 
 		public static PluginManager Manager
 		{
-			get { return _manager ?? new PluginManager(); }
+			get { return _manager ?? (_manager = new PluginManager()); }
 		}
 
 		internal IList<Assembly> Assemblies { get; set; }
