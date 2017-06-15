@@ -30,7 +30,8 @@ namespace AspNetMvcPlugins.Infrastructure
 		{
 			var assemblies = plugins.Select(x => new PrecompiledViewAssembly(x));
 			var engine = new CompositePrecompiledMvcEngine(assemblies.ToArray());
-			ViewEngines.Engines.Insert(0, engine);
+			//if (!ViewEngines.Engines.Any(x => x.GetType().Equals(typeof(CompositePrecompiledMvcEngine))))
+				ViewEngines.Engines.Insert(0, engine);
 			VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
 		}
 
@@ -42,7 +43,7 @@ namespace AspNetMvcPlugins.Infrastructure
 				Select(x => Assembly.LoadFrom(x.FullName));
 			foreach (var assembly in assemblies)
 			{
-				Type type = assembly.GetTypes().Where(t => t.GetInterface(typeof(IFinder).Name) != null).FirstOrDefault();
+				Type type = assembly.GetTypes().Where(t => t.GetInterface(typeof(IPluginModule).Name) != null).FirstOrDefault();
 				if (type != null)
 				{
 					pluginAssemblies.Add(assembly);
@@ -50,6 +51,5 @@ namespace AspNetMvcPlugins.Infrastructure
 			}
 			return pluginAssemblies;
 		}
-        
     }
 }
