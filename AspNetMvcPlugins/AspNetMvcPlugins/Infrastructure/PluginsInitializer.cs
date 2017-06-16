@@ -30,8 +30,14 @@ namespace AspNetMvcPlugins.Infrastructure
 		{
 			var assemblies = plugins.Select(x => new PrecompiledViewAssembly(x));
 			var engine = new CompositePrecompiledMvcEngine(assemblies.ToArray());
-			//if (!ViewEngines.Engines.Any(x => x.GetType().Equals(typeof(CompositePrecompiledMvcEngine))))
+			if (!ViewEngines.Engines.Any(x => x.GetType().Equals(typeof(CompositePrecompiledMvcEngine))))
 				ViewEngines.Engines.Insert(0, engine);
+			else
+			{
+				//TODO: Realize reloading views
+				//engine.Exists()
+				//var current = ViewEngines.Engines[0];
+			}
 			VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
 		}
 
