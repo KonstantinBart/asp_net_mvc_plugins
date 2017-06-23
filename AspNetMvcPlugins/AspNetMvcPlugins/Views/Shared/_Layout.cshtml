@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using AspNetMvcPlugins.Infrastructure;
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -22,7 +24,7 @@
 
     <ul>
     @{
-        var modules = DependencyResolver.Current.GetServices<Domain.Common.IPluginModule>();   
+        var modules = PluginManager.Manager.GetSelectedPlugins();
     }
     @foreach (var plugin in modules)
     {

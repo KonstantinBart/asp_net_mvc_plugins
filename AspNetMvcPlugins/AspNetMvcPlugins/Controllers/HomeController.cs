@@ -23,7 +23,7 @@ namespace AspNetMvcPlugins.Controllers
 		[HttpGet]
 		public ActionResult Index()
 		{
-            PopulateModules("");
+			RefreshModules("");
 
 			ISearchParameters searchParameters = SearchHelper.FillSearchParameters();
 			ViewBag.SearchedFiles = new List<string>();
@@ -41,6 +41,7 @@ namespace AspNetMvcPlugins.Controllers
             {
                 action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.SelectedPluginModule));
                 //TODO: Fix it with Razor Generator
+
                 action.SearchPattern = SearchPattern;
             }
 
@@ -53,17 +54,14 @@ namespace AspNetMvcPlugins.Controllers
 
         public JsonResult RefreshModules(string selectedValue)
         {
-            AutofacRegistrator.Init();
-            return PopulateModules(selectedValue);
-        }
+			PluginManager.Manager.SetSelectedAssemblies(PluginsHelper.GetPlugins("~/SelectedPlugins"));
+			var modules = PluginManager.Manager.GetSelectedPlugins();
 
-        public JsonResult PopulateModules(string selectedValue)
-        {
-            var modules = DependencyResolver.Current.GetServices<IPluginModule>();
-            List<SelectListItem> modulesDropDown = FillModulesDropDown(modules, selectedValue);
-            ViewBag.ModulesDropDown = modulesDropDown;
+			//var modules = DependencyResolver.Current.GetServices<IPluginModule>();
+			List<SelectListItem> modulesDropDown = FillModulesDropDown(modules, selectedValue);
+			ViewBag.ModulesDropDown = modulesDropDown;
 
-            return Json(modulesDropDown, JsonRequestBehavior.AllowGet);
+			return Json(modulesDropDown, JsonRequestBehavior.AllowGet);
         }
 
         private static List<SelectListItem> FillModulesDropDown(IEnumerable<IPluginModule> modules, string selectedValue)

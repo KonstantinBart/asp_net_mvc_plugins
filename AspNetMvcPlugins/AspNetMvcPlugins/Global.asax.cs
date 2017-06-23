@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using AspNetMvcPlugins.Infrastructure;
 
 namespace AspNetMvcPlugins
 {
@@ -9,6 +10,8 @@ namespace AspNetMvcPlugins
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+			PluginsHelper.RegisterViews();
         }
     }
 }

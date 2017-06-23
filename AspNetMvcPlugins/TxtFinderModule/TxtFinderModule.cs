@@ -12,7 +12,7 @@ namespace MvcPlugin
 
         protected override void Load(ContainerBuilder builder)
         {
-			builder.RegisterType<Finder>().As<IFinder>().IfNotRegistered(typeof(TxtFinderModule)); ;
+			builder.RegisterType<Finder>().As<IFinder>().IfNotRegistered(typeof(TxtFinderModule));
         }
     }
 }

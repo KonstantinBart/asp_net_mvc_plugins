@@ -1,18 +1,17 @@
-﻿using AspNetMvcPlugins.Infrastructure;
-using Autofac;
-using Autofac.Integration.Mvc;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Web;
+using System.Web.Compilation;
 using System.Web.Mvc;
+using AspNetMvcPlugins.Infrastructure;
+using Autofac;
+using Autofac.Integration.Mvc;
 
 [assembly: PreApplicationStartMethod(typeof(AspNetMvcPlugins.App_Start.AutofacRegistrator), "Init")]
 namespace AspNetMvcPlugins.App_Start
 {
     public static class AutofacRegistrator
     {
-		public static IContainer Container { get; private set; }
-
         public static void Init()
         {
             var builder = new ContainerBuilder();
@@ -38,7 +37,12 @@ namespace AspNetMvcPlugins.App_Start
             //builder.InjectActionInvoker();
             try
             {
-                builder.RegisterPlugins();
+				PluginManager.Manager.Fill(PluginsHelper.GetPlugins("~/Plugins"));
+				foreach (var assembly in PluginManager.Manager.Assemblies)
+				{
+					builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
+					BuildManager.AddReferencedAssembly(assembly);
+				}
             }
             catch (Exception e)
             {
@@ -47,7 +51,6 @@ namespace AspNetMvcPlugins.App_Start
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
-            Container = container;
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
