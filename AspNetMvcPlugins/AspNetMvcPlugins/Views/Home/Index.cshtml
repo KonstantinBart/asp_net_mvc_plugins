@@ -16,7 +16,7 @@
 }
 
 @using (Ajax.BeginForm(ajaxOptions))
- {
+{
     @Html.ValidationSummary()
                                     
     <p>Выбрать: @Html.TextBoxFor(x => x.FolderPath)</p>
@@ -38,7 +38,9 @@
     <p>Расширенный поиск:</p>
     <p>
         @Html.DropDownList("SelectedPluginModule", ViewBag.ModulesDropDown as IEnumerable<SelectListItem>, new { @id = "SelectedPluginModule" })
-        Строка для поиска: @Html.TextBox("SearchPattern")
+        <div id="linkResults"></div>
+        @*<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" href="/Txt" title="TxtFinderModule">Настроить модуль: TxtFinderModule</a>*@
+        <div id="results"></div>
     </p>
     
     <div>
@@ -52,7 +54,7 @@
     <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="getData()" />
     <input type="button" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
     *@
- }
+}
 
 <div id="resultsDiv"></div>
 
@@ -72,6 +74,20 @@
             //$("#findButton").attr('value', 'Искать...');
             $("#findButton").prop('disabled', false);
         }
+
+        $('#SelectedPluginModule').change(function () {
+            var selectedModule = $(this);
+            var ddl = $("#linkResults");
+            ddl.empty();
+            $('#results').empty();
+            if (selectedModule.val() != "") {
+                var selectedText = selectedModule.find("option:selected").text();
+                var selectedRefFull = selectedText;
+                var selectedRef = selectedRefFull.substring(0,3);
+                ddl.append('<a id="link" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" href="/' + selectedRef + '" title="' + selectedText + '">Настроить модуль для файлов ' + selectedModule.val() + '</a>');
+                //$('#link')[0].click();
+            }
+        });
 
 
         //var syncMethod;

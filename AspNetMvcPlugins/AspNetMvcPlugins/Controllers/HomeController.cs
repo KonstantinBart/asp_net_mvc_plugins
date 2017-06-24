@@ -40,8 +40,6 @@ namespace AspNetMvcPlugins.Controllers
             if (!String.IsNullOrEmpty(parameters.SelectedPluginModule))
             {
                 action = _actions.SingleOrDefault(m => m.FileExtension.Equals(parameters.SelectedPluginModule));
-                //TODO: Fix it with Razor Generator
-
                 action.SearchPattern = SearchPattern;
             }
 
@@ -67,7 +65,7 @@ namespace AspNetMvcPlugins.Controllers
         private static List<SelectListItem> FillModulesDropDown(IEnumerable<IPluginModule> modules, string selectedValue)
         {
             List<SelectListItem> result = new List<SelectListItem>();
-            result.Add(new SelectListItem() { Text = "Choose plugin...", Value = "", Selected = false });
+            result.Add(new SelectListItem() { Text = "Выберите модуль...", Value = "", Selected = false });
             result.AddRange( 
                 modules.Select(i => new SelectListItem()
                     {
@@ -78,6 +76,17 @@ namespace AspNetMvcPlugins.Controllers
             );
             return result;
         }
+
+        //public ActionResult PluginChange(string name)
+        //{
+        //    var modules = PluginManager.Manager.GetSelectedPlugins();
+        //    var selectedModule = from v in modules where v.Name.Equals(name) select v;
+        //    if (!selectedModule.Any())
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return PartialView(selectedModule);
+        //}
 
 	}
 }

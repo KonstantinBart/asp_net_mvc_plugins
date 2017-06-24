@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AspNetMvcPlugins.Infrastructure;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Domain.Common;
 
 [assembly: PreApplicationStartMethod(typeof(AspNetMvcPlugins.App_Start.AutofacRegistrator), "Init")]
 namespace AspNetMvcPlugins.App_Start
@@ -35,23 +36,19 @@ namespace AspNetMvcPlugins.App_Start
 
             //// OPTIONAL: Enable action method parameter injection (RARE).
             //builder.InjectActionInvoker();
-            try
-            {
-				PluginManager.Manager.Fill(PluginsHelper.GetPlugins("~/Plugins"));
-				foreach (var assembly in PluginManager.Manager.Assemblies)
-				{
-					builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
-					BuildManager.AddReferencedAssembly(assembly);
-				}
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Can't loading plugins. {}", e.Message);
-            }
 
+            PluginManager.Manager.Fill(PluginsHelper.GetPlugins("~/Plugins"));
+			foreach (var assembly in PluginManager.Manager.Assemblies)
+			{
+				builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
+				BuildManager.AddReferencedAssembly(assembly);
+			}
+            
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            
         }
     }
 

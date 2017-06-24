@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using AspNetMvcPlugins.Infrastructure;
+using Domain.Common;
 
 namespace AspNetMvcPlugins
 {

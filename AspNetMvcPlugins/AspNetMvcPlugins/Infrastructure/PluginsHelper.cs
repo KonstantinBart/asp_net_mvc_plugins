@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using Domain.Common;
 using RazorGenerator.Mvc;
+using System.Diagnostics;
 
 namespace AspNetMvcPlugins.Infrastructure
 {
@@ -17,17 +18,24 @@ namespace AspNetMvcPlugins.Infrastructure
 		internal static IList<Assembly> GetPlugins(string path)
 		{
 			IList<Assembly> pluginAssemblies = new List<Assembly>();
-			var pluginFolder = new DirectoryInfo(HostingEnvironment.MapPath(path));
-			var assemblies = pluginFolder.GetFiles("*.dll", SearchOption.AllDirectories).
-				Select(x => Assembly.LoadFrom(x.FullName));
-			foreach (var assembly in assemblies)
-			{
-				Type type = assembly.GetTypes().Where(t => t.GetInterface(typeof(IPluginModule).Name) != null).FirstOrDefault();
-				if (type != null)
-				{
-					pluginAssemblies.Add(assembly);
-				}
-			}
+            try
+            {
+                var pluginFolder = new DirectoryInfo(HostingEnvironment.MapPath(path));
+                var assemblies = pluginFolder.GetFiles("*.dll", SearchOption.AllDirectories).
+                    Select(x => Assembly.LoadFrom(x.FullName));
+                foreach (var assembly in assemblies)
+                {
+                    Type type = assembly.GetTypes().Where(t => t.GetInterface(typeof(IPluginModule).Name) != null).FirstOrDefault();
+                    if (type != null)
+                    {
+                        pluginAssemblies.Add(assembly);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Can't loading plugins. {}", ex.Message);
+            }
 			return pluginAssemblies;
 		}
 

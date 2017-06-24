@@ -33,8 +33,8 @@ namespace MvcPlugin
 
         public string SearchPattern
         {
-            get{ return "test string"; }
-            set { value = "test string"; }
+            get;
+            set;
         }
 
 	}

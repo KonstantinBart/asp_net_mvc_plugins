@@ -26,15 +26,15 @@ namespace MvcPlugin
 			}
 			catch (Exception e)
 			{
-				Debug.WriteLine("The TXT file could not be read. {0}", e.Message);
+				Debug.WriteLine("The DOC file could not be read. {0}", e.Message);
 			}
 			return false;
 		}
 
         public string SearchPattern
         {
-            get{ return "test string"; }
-            set { value = "test string"; }
+            get;
+            set;
         }
 
 	}
