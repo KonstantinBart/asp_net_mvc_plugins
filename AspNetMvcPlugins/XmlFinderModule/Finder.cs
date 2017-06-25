@@ -1,8 +1,7 @@
-﻿using System;
-using System.Xml;
-using Domain.Common;
-using System.Threading.Tasks;
+﻿using Domain.Common;
+using System;
 using System.Diagnostics;
+using System.Xml;
 
 namespace MvcPlugin
 {

@@ -55,11 +55,6 @@ namespace AspNetMvcPlugins.Controllers
             return SearchHelper.CheckFile(parameters, action, file) ? file.Name : null;
 		}
 
-        public JsonResult FindByName(SearchParameters parameters, String SearchPattern, String number)
-        {
-            return null;
-        }
-
         public JsonResult RefreshModules(string selectedValue)
         {
 			PluginManager.Manager.SetSelectedAssemblies(PluginsHelper.GetPlugins("~/SelectedPlugins"));

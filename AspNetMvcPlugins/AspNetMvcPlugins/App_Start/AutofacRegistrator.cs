@@ -1,12 +1,9 @@
-﻿using System;
-using System.Diagnostics;
+﻿using AspNetMvcPlugins.Infrastructure;
+using Autofac;
+using Autofac.Integration.Mvc;
 using System.Web;
 using System.Web.Compilation;
 using System.Web.Mvc;
-using AspNetMvcPlugins.Infrastructure;
-using Autofac;
-using Autofac.Integration.Mvc;
-using Domain.Common;
 
 [assembly: PreApplicationStartMethod(typeof(AspNetMvcPlugins.App_Start.AutofacRegistrator), "Init")]
 namespace AspNetMvcPlugins.App_Start

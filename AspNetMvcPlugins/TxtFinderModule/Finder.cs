@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Domain.Common;
-using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace MvcPlugin

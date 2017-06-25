@@ -15,3 +15,21 @@
 {
     clear:both;
 }
+
+#elementsList {
+    width: 300px;
+    height: 300px;
+    overflow: auto;
+    margin-left: 0;
+    padding-left: 0;
+    clear: both;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.counter {
+    margin: 10px 5px;
+    float: left;
+}
