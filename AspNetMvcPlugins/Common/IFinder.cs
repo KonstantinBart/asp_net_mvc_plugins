@@ -6,7 +6,7 @@ namespace Domain.Common
 {
     public interface IFinder
     {
-        Task<bool> Find(String fileName);
+        bool Find(String fileName);
         String FileExtension { get; }
         String SearchPattern { get; set; }
     }

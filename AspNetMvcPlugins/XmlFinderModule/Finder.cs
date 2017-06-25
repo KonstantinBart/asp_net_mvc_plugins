@@ -13,7 +13,7 @@ namespace MvcPlugin
 			get { return ".xml"; }
 		}
 
-		public async Task<bool> Find(String fileName)
+		public bool Find(String fileName)
 		{
 			try
 			{

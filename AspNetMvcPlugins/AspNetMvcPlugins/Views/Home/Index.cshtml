@@ -49,23 +49,25 @@
     <div id="loading">
         <p>Идет поиск...</p>
     </div>
-    @*
+    
     <br />
-    <input type="submit" id="sendAjax" value="Поиск Ajax" onclick="getData()" />
+    <input type="button" id="sendAjax" value="Поиск Ajax" onclick="getData()" />
     <input type="button" id="cancelButton" value="Отменить поиск" onclick="cancelSearch()" />
-    *@
+
 }
 
+@Html.Hidden("filesCount")
 <div id="resultsDiv"></div>
 
 @section scripts{
     <script>
+
         function OnBegin() {
             //$("#findButton").attr('value', 'Остановить поиск');
             $("#findButton").prop('disabled', true);
         }
         function OnSuccess(data) {
-            //alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
+            alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
         }
         function OnFailure(request, error) {
             $("#resultsDiv").html("Ошибка выполнения поиска!");
@@ -90,19 +92,44 @@
         });
 
 
-        //var syncMethod;
-        //function getData() {
-        //    syncMethod = $.ajax({
-        //        cache: false,
-        //        url: 'Home/Find',
-        //        type: "POST"
-        //    });
-        //}
+        function getData() {
+            var form = $("#form0");
+            var url = '@Url.Action("GetFilesCount")';
+            var filesCount;
+            var outputDiv = $('#resultsDiv');
+            $.post(url, form.serialize(), function (data) {
+                filesCount = parseInt(data);
+                getDataByNumber(filesCount);
+            });
+        }
 
-        //function cancelSearch() {
-        //    alert("Cancel occured!");
-        //    syncMethod.abort();
-        //}
+        var stopAction = false;
+
+        function getDataByNumber(filesCount) {
+            stopAction = false;
+            var outputDiv = $('#resultsDiv');
+            outputDiv.empty();
+
+            var form = $("#form0");
+            var url = '@Url.Action("Find")';
+            var formData = form.serialize();
+
+            for (var i = 0; i < filesCount; i++) {
+                if (stopAction === true) {
+                    //alert("Canceling search...");
+                    return;
+                }
+                $.post(url, formData + "&number=" + i, function (data) {
+                    if(data != "");
+                        outputDiv.append(data);
+                });
+            }
+        }
+
+        function cancelSearch() {
+            stopAction = true;
+        }
+
 
         var timer = setInterval(updateDiv, 5000);
         function updateDiv() {

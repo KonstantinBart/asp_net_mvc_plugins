@@ -1,12 +1,11 @@
-﻿using AspNetMvcPlugins.App_Start;
-using AspNetMvcPlugins.Infrastructure;
+﻿using AspNetMvcPlugins.Infrastructure;
 using Domain.Common;
 using Domain.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace AspNetMvcPlugins.Controllers
@@ -31,11 +30,16 @@ namespace AspNetMvcPlugins.Controllers
 			return View(searchParameters);
 		}
 
-		public async Task<PartialViewResult> Find(SearchParameters parameters, String SearchPattern, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			//var modules = DependencyResolver.Current.GetServices<IPluginModule>();
-            //ViewBag.Plugins = modules;
+        public int GetFilesCount(SearchParameters parameters)
+        {
+            var filesList = SearchHelper.GetFiles(parameters);
+            Session["files"] = filesList;
+            return filesList.Count();
+        }
 
+		public String Find(SearchParameters parameters, String SearchPattern, int number)
+		{
+            Debug.WriteLine("Searching for: " + number);
 			IFinder action = null;
             if (!String.IsNullOrEmpty(parameters.SelectedPluginModule))
             {
@@ -43,19 +47,24 @@ namespace AspNetMvcPlugins.Controllers
                 action.SearchPattern = SearchPattern;
             }
 
-            //TODO: Fix cancellation
-            //var token = CancellationTokenSource.CreateLinkedTokenSource(
-            //    Response.ClientDisconnectedToken, Request.TimedOutToken);
-			
-            return PartialView(await SearchHelper.AsyncSearchByParameters(parameters, action, cancellationToken));
+            var files = Session["files"] as List<FileInfo>;
+            if (files == null || files.Count < number)
+                return null;
+            FileInfo file = files[number];
+            
+            return SearchHelper.CheckFile(parameters, action, file) ? file.Name : null;
 		}
+
+        public JsonResult FindByName(SearchParameters parameters, String SearchPattern, String number)
+        {
+            return null;
+        }
 
         public JsonResult RefreshModules(string selectedValue)
         {
 			PluginManager.Manager.SetSelectedAssemblies(PluginsHelper.GetPlugins("~/SelectedPlugins"));
 			var modules = PluginManager.Manager.GetSelectedPlugins();
 
-			//var modules = DependencyResolver.Current.GetServices<IPluginModule>();
 			List<SelectListItem> modulesDropDown = FillModulesDropDown(modules, selectedValue);
 			ViewBag.ModulesDropDown = modulesDropDown;
 
@@ -76,17 +85,6 @@ namespace AspNetMvcPlugins.Controllers
             );
             return result;
         }
-
-        //public ActionResult PluginChange(string name)
-        //{
-        //    var modules = PluginManager.Manager.GetSelectedPlugins();
-        //    var selectedModule = from v in modules where v.Name.Equals(name) select v;
-        //    if (!selectedModule.Any())
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return PartialView(selectedModule);
-        //}
 
 	}
 }

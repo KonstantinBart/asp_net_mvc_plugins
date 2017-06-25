@@ -13,13 +13,13 @@ namespace MvcPlugin
             get { return ".doc"; }
         }
 
-        public async Task<bool> Find(String fileName)
+        public bool Find(String fileName)
 		{
 			try
 			{
 				using (StreamReader sr = new StreamReader(fileName))
 				{
-                    var fileContents = await sr.ReadToEndAsync();
+                    var fileContents = sr.ReadToEnd();
 					if (fileContents.Contains(SearchPattern))
 						return true;
 				}
