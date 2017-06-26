@@ -16,6 +16,9 @@ namespace AspNetMvcPlugins.Infrastructure
 			get { return _manager ?? (_manager = new PluginManager()); }
 		}
 
+		/// <summary>
+		/// Все доступные для отображения модули.
+		/// </summary>
 		internal IEnumerable<Assembly> Assemblies { get; set; }
 
 		public PluginManager()
@@ -38,6 +41,9 @@ namespace AspNetMvcPlugins.Infrastructure
 			Assemblies = from v in list select v;
 		}
 
+		/// <summary>
+		/// Модули, выбранные для отображения в данный момент.
+		/// </summary>
 		internal IEnumerable<Assembly> SelectedAssemblies { get; set; }
 
 		public void SetSelectedAssemblies(IEnumerable<Assembly> selectedAssemblies)
@@ -45,6 +51,10 @@ namespace AspNetMvcPlugins.Infrastructure
 			SelectedAssemblies = from v in selectedAssemblies where Assemblies.Contains(v) select v;
 		}
 
+		/// <summary>
+		/// Возвращает список выбранных в данный момент модулей (из общего списка).
+		/// </summary>
+		/// <returns>Список модулей.</returns>
 		public IEnumerable<IPluginModule> GetSelectedPlugins()
 		{
 			var modules = DependencyResolver.Current.GetServices<IPluginModule>();

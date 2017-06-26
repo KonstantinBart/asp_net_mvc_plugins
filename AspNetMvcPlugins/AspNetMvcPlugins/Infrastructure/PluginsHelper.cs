@@ -15,6 +15,11 @@ namespace AspNetMvcPlugins.Infrastructure
 {
     public static class PluginsHelper
     {
+		/// <summary>
+		/// Возвращает список модулей из определенной директории.
+		/// </summary>
+		/// <param name="path">Путь с директории.</param>
+		/// <returns>Список модулей.</returns>
 		internal static IList<Assembly> GetPlugins(string path)
 		{
 			IList<Assembly> pluginAssemblies = new List<Assembly>();
@@ -39,6 +44,9 @@ namespace AspNetMvcPlugins.Infrastructure
 			return pluginAssemblies;
 		}
 
+		/// <summary>
+		/// Регистрация представлений для загруженных модулей.
+		/// </summary>
 		internal static void RegisterViews()
 		{
 			var assemblies = PluginManager.Manager.Assemblies.Select(x => new PrecompiledViewAssembly(x));

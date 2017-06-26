@@ -10,6 +10,9 @@ namespace AspNetMvcPlugins.App_Start
 {
     public static class AutofacRegistrator
     {
+		/// <summary>
+		/// Инициализируем Autofac.
+		/// </summary>
         public static void Init()
         {
             var builder = new ContainerBuilder();

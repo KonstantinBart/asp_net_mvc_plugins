@@ -16,7 +16,7 @@
         <p>не более: @Html.TextBoxFor(x => x.FileLength) Кб</p>
         <p>Дата:</p>
         <p>создан ранее: @Html.TextBoxFor(x => x.CreationDate, new { @type = "date", @Value = Model.CreationDate.ToString("yyyy-MM-dd") })</p>
-        <p>Аттрибуты:</p>
+        <p>Атрибуты:</p>
         <div>
             @for (int i = 0; i < Model.FileAttributes.Count(); i++)
             { 
@@ -45,6 +45,8 @@
 </div>
 @section scripts{
     <script>
+
+        //Действие при изменении выбора в выпадающем списке модулей
         $('#SelectedPluginModule').change(function () {
             var selectedModule = $(this);
             var ddl = $("#linkResults");
@@ -54,10 +56,13 @@
                 var selectedText = selectedModule.find("option:selected").text();
                 var selectedRefFull = selectedText;
                 var selectedRef = selectedRefFull.substring(0, 3);
-                ddl.append('<a id="link" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" href="/' + selectedRef + '" title="' + selectedText + '">Настроить модуль для файлов ' + selectedModule.val() + '</a>');
+                ddl.append("Настроить модуль для файлов: " + selectedModule.val());
+                ddl.append('<a id="link" style="visibility:hidden;" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" href="/' + selectedRef + '" title="' + selectedText + '">Настроить модуль для файлов ' + selectedModule.val() + '</a>');
+                $("#link").click();
             }
         });
 
+        //Получение количества файлов и поиск по ним.
         function getData() {
             $('#sendAjax').prop("disabled", true)
             var form = $("#form0");
@@ -71,6 +76,7 @@
         }
 
         var stopAction = false;
+        //Поиск по файлам.
         function getDataByNumber(filesCount) {
             stopAction = false;
             var outputDiv = $('#resultsDiv');
@@ -102,11 +108,13 @@
             $('#sendAjax').prop("disabled", false);
         }
 
+        //Отмена поиска (не останавливает поиск.)
         function cancelSearch() {
             stopAction = true;
         }
 
         var timer = setInterval(updateDiv, 5000);
+        //Обновление выпадающего списка модулей.
         function updateDiv() {
             var url = '@Url.Action("RefreshModules")';
             var ddl = $("#SelectedPluginModule");

@@ -17,6 +17,11 @@ namespace AspNetMvcPlugins.Infrastructure
         //    return await Task.Run(() => AsyncSearch(searchParameters, action, token));
         //}
 
+		/// <summary>
+		/// Возвращает список файлов.
+		/// </summary>
+		/// <param name="searchParameters">Параметры поиска.</param>
+		/// <returns>Список файлов.</returns>
         internal static List<FileInfo> GetFiles(ISearchParameters searchParameters)
         {
             List<FileInfo> result = new List<FileInfo>();
@@ -34,6 +39,13 @@ namespace AspNetMvcPlugins.Infrastructure
             return result;
         }
 
+		/// <summary>
+		/// Возвращает результат проверки файла на соответствие параметрам поиска.
+		/// </summary>
+		/// <param name="searchParameters">Параметры поиска.</param>
+		/// <param name="action">Действие.</param>
+		/// <param name="item">Свойства файла.</param>
+		/// <returns>Результат проверки файла.</returns>
         internal static bool CheckFile(ISearchParameters searchParameters, IFinder action, FileInfo item)
         {
             return IsFoundByPlugin(action, item) && CheckByParameters(searchParameters, item);
@@ -89,6 +101,10 @@ namespace AspNetMvcPlugins.Infrastructure
 				hasAllFileAttributes;
 		}
 
+		/// <summary>
+		/// Заполняет начальные параметры формы.
+		/// </summary>
+		/// <returns>Список параметров.</returns>
 		internal static ISearchParameters FillSearchParameters()
 		{
 			ISearchParameters searchParameters = new SearchParameters();
